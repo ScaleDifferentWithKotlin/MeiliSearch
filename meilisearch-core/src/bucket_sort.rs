@@ -101,7 +101,7 @@ where
         let postings_list_view = PostingsListView::original(Rc::from(input), Rc::new(matches));
         // TODO optimize the filter by skipping docids that have already been seen
         let mut offset = 0;
-        for matches in postings_list_view.linear_group_by_key(|m| m.document_id) {
+        for matches in postings_list_view.binary_group_by_key(|m| m.document_id) {
             let document_id = matches[0].document_id;
             if docids.contains(&document_id) {
                 let range = postings_list_view.range(offset, matches.len());
